@@ -1,4 +1,4 @@
-var CheckedPoint = (function () {
+var ClickedPoints = (function () {
     const VSHADER_SOURCE =
         `
         attribute vec4 a_Position;
