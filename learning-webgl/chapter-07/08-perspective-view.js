@@ -54,16 +54,17 @@ const PerspectiveView = (function () {
 
         const viewMatrix = new Matrix4();
         const projectMatrix = new Matrix4();
+        const aspect = canvas.width / canvas.height;
         document.onkeydown = (event) => {
-            keydown(event, gl, n, u_ViewMatrix, viewMatrix, u_ProjectMatrix, projectMatrix, nearFar);
+            keydown(event, gl, n, u_ViewMatrix, viewMatrix, u_ProjectMatrix, projectMatrix, nearFar, aspect);
         };
 
         gl.clearColor(0.0, 0.8, 0.8, 1.0);
 
-        draw(gl, n, u_ViewMatrix, viewMatrix, u_ProjectMatrix, projectMatrix, nearFar);
+        draw(gl, n, u_ViewMatrix, viewMatrix, u_ProjectMatrix, projectMatrix, nearFar, aspect);
     }
 
-    function keydown(event, gl, n, u_ViewMatrix, viewMatrix, u_ProjectMatrix, projectMatrix, nearFar) {
+    function keydown(event, gl, n, u_ViewMatrix, viewMatrix, u_ProjectMatrix, projectMatrix, nearFar, aspect) {
         const keyCode = event.keyCode;
         switch (keyCode) {
             case 87: // w
@@ -88,20 +89,21 @@ const PerspectiveView = (function () {
                 return;
 
         }
-        draw(gl, n, u_ViewMatrix, viewMatrix, u_ProjectMatrix, projectMatrix, nearFar);
+        draw(gl, n, u_ViewMatrix, viewMatrix, u_ProjectMatrix, projectMatrix, nearFar, aspect);
     }
 
-    let g_eyeX = 0.20;
-    let g_eyeY = 0.25;
-    let g_eyeZ = 0.25;
-    let g_near = 0.0;
-    let g_far = 2.0;
+    let g_eyeX = 0.0;
+    let g_eyeY = 0.0;
+    let g_eyeZ = 5.0;
+    let g_fov = 30;
+    let g_near = 1.0;
+    let g_far = 100.0;
 
-    function draw(gl, n, u_ViewMatrix, viewMatrix, u_ProjectMatrix, projectMatrix) {
-        viewMatrix.setLookAt(g_eyeX, g_eyeY, g_eyeZ, 0, 0, 0, 0, 1, 0);
+    function draw(gl, n, u_ViewMatrix, viewMatrix, u_ProjectMatrix, projectMatrix, nearFar, aspect) {
+        viewMatrix.setLookAt(g_eyeX, g_eyeY, g_eyeZ, 0, 0, -100, 0, 1, 0);
         gl.uniformMatrix4fv(u_ViewMatrix, false, viewMatrix.elements);
 
-        projectMatrix.setOrtho(-1.0, 1.0, -1.0, 1.0, g_near, g_far);
+        projectMatrix.setPerspective(g_fov, aspect, g_near, g_far);
         gl.uniformMatrix4fv(u_ProjectMatrix, false, projectMatrix.elements);
 
         gl.clear(gl.COLOR_BUFFER_BIT);
