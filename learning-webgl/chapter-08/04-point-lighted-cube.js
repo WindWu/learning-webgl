@@ -1,37 +1,37 @@
 const PointLightedCube = (function () {
     const VSHADER_SOURCE =
         `
-attribute vec4 a_Position;
-attribute vec4 a_Color;
-attribute vec4 a_Normal;
-uniform mat4 u_MvpMatrix;
-uniform mat4 u_ModelMatrix;
-uniform mat4 u_NormalMatrix;
-uniform vec3 u_LightColor;
-uniform vec3 u_LightPosition;
-uniform vec3 u_AmbientLight;
-varying vec4 v_Color;
-void main() {
-gl_Position = u_MvpMatrix * a_Position;
-vec3 normal = normalize(vec3(u_NormalMatrix * a_Normal));
-vec4 vertexPosition = u_ModelMatrix * a_Position;
-vec3 lightDirection = normalize(u_LightPosition - vec3(vertexPosition));
-float nDotL = max(dot(lightDirection, normal), 0.0);
-vec3 diffuse = u_LightColor * vec3(a_Color) * nDotL;
-vec3 ambient = u_AmbientLight * vec3(a_Color);
-v_Color = vec4(diffuse + ambient, a_Color.a);
-}
-`
+        attribute vec4 a_Position;
+        attribute vec4 a_Color;
+        attribute vec4 a_Normal;
+        uniform mat4 u_MvpMatrix;
+        uniform mat4 u_ModelMatrix;
+        uniform mat4 u_NormalMatrix;
+        uniform vec3 u_LightColor;
+        uniform vec3 u_LightPosition;
+        uniform vec3 u_AmbientLight;
+        varying vec4 v_Color;
+        void main() {
+        gl_Position = u_MvpMatrix * a_Position;
+        vec3 normal = normalize(vec3(u_NormalMatrix * a_Normal));
+        vec4 vertexPosition = u_ModelMatrix * a_Position;
+        vec3 lightDirection = normalize(u_LightPosition - vec3(vertexPosition));
+        float nDotL = max(dot(lightDirection, normal), 0.0);
+        vec3 diffuse = u_LightColor * vec3(a_Color) * nDotL;
+        vec3 ambient = u_AmbientLight * vec3(a_Color);
+        v_Color = vec4(diffuse + ambient, a_Color.a);
+        }
+        `
     const FSHADER_SOURCE =
         `
-#ifdef GL_ES
-precision mediump float;
-#endif
-varying vec4 v_Color;
-void main() {
-gl_FragColor = v_Color;
-}
-`
+        #ifdef GL_ES
+        precision mediump float;
+        #endif
+        varying vec4 v_Color;
+        void main() {
+        gl_FragColor = v_Color;
+        }
+        `
 
     function main() {
         const canvas = document.getElementById('webgl')
@@ -134,7 +134,7 @@ gl_FragColor = v_Color;
             1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, // v0-v5-v6-v1 up
             1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, // v1-v6-v7-v2 left
             1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, // v7-v4-v3-v2 down
-            1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0　 // v4-v7-v6-v5 back
+            1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0 // v4-v7-v6-v5 back
         ]);
 
         var normals = new Float32Array([ // Normal
