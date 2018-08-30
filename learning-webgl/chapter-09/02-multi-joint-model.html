@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Multi Joint Model</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body onload="MultiJointModel.main()">
+    <canvas id="webgl" width="400" , height="400"></canvas>
+    <p>←→: arm1 rotation(y-axis), ↑↓: joint1 rotation, xz: joint2(wrist) rotation, cv: finger
+        rotation</p>
+</body>
+
+<footer>
+    <script src="../lib/webgl-utils.js" type="text/javascript"></script>
+    <script src="../lib/webgl-debug.js" type="text/javascript"></script>
+    <script src="../lib/cuon-utils.js"></script>
+    <script src="../lib/cuon-matrix.js"></script>
+    <script src="./02-multi-joint-model.js"></script>
+</footer>
+
+</html>
